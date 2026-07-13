@@ -45,7 +45,7 @@
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ozl-ey-A2D" userLabel="Preview Image">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ozl-ey-A2D" userLabel="Preview Image">
                                         <rect key="frame" x="0.0" y="43.5" width="374" height="561"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Ozl-ey-A2D" secondAttribute="height" multiplier="2:3" id="sKh-am-8ue"/>
@@ -119,7 +119,9 @@
                     <connections>
                         <outlet property="counterLabel" destination="WYb-gG-9aW" id="9Tc-8G-Ojq"/>
                         <outlet property="imageView" destination="Ozl-ey-A2D" id="n0k-vI-68E"/>
+                        <outlet property="noButton" destination="gBG-Hr-Y3s" id="AUI-WG-fVz"/>
                         <outlet property="textLabel" destination="3RT-Ln-QPd" id="gI6-bX-3nk"/>
+                        <outlet property="yesButton" destination="rKa-Oh-9A6" id="XgG-kQ-hYB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

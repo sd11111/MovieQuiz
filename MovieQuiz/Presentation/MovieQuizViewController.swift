@@ -1,7 +1,7 @@
 import UIKit
 
 final class MovieQuizViewController: UIViewController {
-    // MARK: - Переменные и константы
+    // MARK: - Private variables
     private var currentQuestionIndex = 0
     private var correctAnswers = 0
     private let questions: [QuizQuestion] = [
@@ -47,27 +47,29 @@ final class MovieQuizViewController: UIViewController {
                 correctAnswer: false)
         ]
     
-    // MARK: - Действия
-    @IBAction func yesButtonClicked(_ sender: UIButton) {
+    // MARK: - Private actions
+    @IBAction private func yesButtonClicked(_ sender: UIButton) {
         let currentQuestion = questions[currentQuestionIndex]
         let givenAnswer = true
             
         showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
     }
-    @IBAction func noButtonClicked(_ sender: UIButton) {
+    @IBAction private func noButtonClicked(_ sender: UIButton) {
             let currentQuestion = questions[currentQuestionIndex]
             let givenAnswer = false
                 
             showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
     }
         
-    // MARK: - Аутлеты
-
-    @IBOutlet weak var counterLabel: UILabel!
-    @IBOutlet weak var textLabel: UILabel!
-    @IBOutlet weak var imageView: UIImageView!
+    // MARK: - Private outlets
     
-    // MARK: - Структуры
+    @IBOutlet private weak var yesButton: UIButton!
+    @IBOutlet private weak var noButton: UIButton!
+    @IBOutlet private weak var counterLabel: UILabel!
+    @IBOutlet private weak var textLabel: UILabel!
+    @IBOutlet private weak var imageView: UIImageView!
+    
+    // MARK: - Structs
     struct QuizQuestion {
       // строка с названием фильма,
       // совпадает с названием картинки афиши фильма в Assets
@@ -97,7 +99,7 @@ final class MovieQuizViewController: UIViewController {
       let buttonText: String
     }
 
-    // MARK: - Функции
+    // MARK: - Private Methods
     // метод конвертации, который принимает моковый вопрос и возвращает вью модель для экрана вопроса
     // приватный метод конвертации, который принимает моковый вопрос и возвращает вью модель для главного экрана
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
@@ -113,6 +115,9 @@ final class MovieQuizViewController: UIViewController {
         textLabel.text = step.question
         counterLabel.text = step.questionNumber
         imageView.layer.borderColor = UIColor.clear.cgColor
+        
+        yesButton.isEnabled = true
+        noButton.isEnabled = true
     }
     
     private func show(quiz result: QuizResultsViewModel) {
@@ -139,6 +144,9 @@ final class MovieQuizViewController: UIViewController {
         if isCorrect { // 1
             correctAnswers += 1 // 2
         }
+        
+        yesButton.isEnabled = false
+        noButton.isEnabled = false
         
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 8
