@@ -150,12 +150,19 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-       imageView.layer.cornerRadius = 20
+        imageView.layer.cornerRadius = 20
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         statisticService = StatisticService()
 
         showLoadingIndicator()
         questionFactory?.loadData()
+        var noConfiguration = noButton.configuration
+        noConfiguration?.background.cornerRadius = 15
+        noButton.configuration = noConfiguration
+
+        var yesConfiguration = yesButton.configuration
+        yesConfiguration?.background.cornerRadius = 15
+        yesButton.configuration = yesConfiguration
     }
     
     

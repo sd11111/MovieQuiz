@@ -73,11 +73,6 @@
                                                     <color key="baseForegroundColor" name="YP Black"/>
                                                     <color key="baseBackgroundColor" name="YP White"/>
                                                 </buttonConfiguration>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="15"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="noButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kz9-Vz-Knr"/>
                                                 </connections>
@@ -90,11 +85,6 @@
                                                     <color key="baseForegroundColor" name="YP Black"/>
                                                     <color key="baseBackgroundColor" name="YP White"/>
                                                 </buttonConfiguration>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="15"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="yesButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Axl-kd-G4v"/>
                                                 </connections>
