@@ -4,7 +4,6 @@ final class MovieQuizViewController: UIViewController {
     // MARK: - Private variables
     
     private var alertPresenter = AlertPresenter()
-    private var statisticService: StatisticServiceProtocol = StatisticService()
     private var presenter: MovieQuizPresenter!
     
     // MARK: - Private actions
@@ -23,8 +22,6 @@ final class MovieQuizViewController: UIViewController {
     @IBOutlet private weak var textLabel: UILabel!
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
-    
-    
     
     // MARK: - Private Methods
     
@@ -47,65 +44,46 @@ final class MovieQuizViewController: UIViewController {
         noButton.isEnabled = true
     }
     
-    func show(quiz result: QuizResultsViewModel) {
-        statisticService.store(correct: presenter.correctAnswers, total: presenter.questionsAmount)
-        
-        let model = AlertModel(
-            title: result.title,
-            message: """
-                Ваш результат: \(presenter.correctAnswers)/\(presenter.questionsAmount)
-                Всего игр: \(statisticService.gamesCount)
-                Рекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(statisticService.bestGame.date.dateTimeString))
-                Средняя точность: \(String(format: "%.2f", statisticService.totalAccuracy))%
-                """,
-            buttonText: result.buttonText,
-            completion: { [weak self] in
-                guard let self = self else { return }
-                
-                self.presenter.restartGame()
-            }
-        )
-        alertPresenter.show(in: self, model: model)
-    }
-
-
-    
-    func showAnswerResult(isCorrect: Bool) {
-        presenter.didAnswer(isCorrectAnswer: isCorrect)
-        
+    func highlightImageBorder(isCorrectAnswer: Bool) {
         yesButton.isEnabled = false
         noButton.isEnabled = false
         
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 8
-        imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            guard let self = self else { return }
-            self.presenter.showNextQuestionOrResults()
-        }
+        imageView.layer.borderColor = isCorrectAnswer ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
     }
     
-    
-    
+    func show(quiz result: QuizResultsViewModel) {
+        let alert = UIAlertController(
+            title: result.title,
+            message: result.text,
+            preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: result.buttonText, style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            
+            self.presenter.restartGame()
+        }
+        
+        alert.addAction(action)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
     
     func showNetworkError(message: String) {
         hideLoadingIndicator()
-        
         let model = AlertModel(title: "Ошибка",
                                message: message,
                                buttonText: "Попробовать еще раз") { [weak self] in
             guard let self = self else { return }
-            
             self.presenter.resetQuestionIndex()
             self.presenter.restartGame()
-            
         }
-        
         alertPresenter.show(in: self, model: model)
     }
     
     // MARK: - Жизненный цикл
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -116,11 +94,9 @@ final class MovieQuizViewController: UIViewController {
         var noConfiguration = noButton.configuration
         noConfiguration?.background.cornerRadius = 15
         noButton.configuration = noConfiguration
-
+        
         var yesConfiguration = yesButton.configuration
         yesConfiguration?.background.cornerRadius = 15
         yesButton.configuration = yesConfiguration
     }
-    
-    
 }
