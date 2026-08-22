@@ -1,14 +1,31 @@
 import Foundation
 
-final class MovieQuizPresenter {
+final class MovieQuizPresenter: QuestionFactoryDelegate {
+    
+    
+    
     
     // MARK: variables
+    
     weak var viewController: MovieQuizViewController?
+    private var questionFactory: QuestionFactoryProtocol?
     let questionsAmount: Int = 10
     private var currentQuestionIndex: Int = 0
     var currentQuestion: QuizQuestion?
     var correctAnswers: Int = 0
-    var questionFactory: QuestionFactoryProtocol?
+    
+    // MARK: init
+    init(viewController: MovieQuizViewController) {
+        self.viewController = viewController
+        
+        questionFactory = QuestionFactory(
+            moviesLoader: MoviesLoader(),
+            delegate: self
+        )
+        
+        questionFactory?.loadData()
+        viewController.showLoadingIndicator()
+    }
     
     
     // MARK: methods
@@ -41,7 +58,7 @@ final class MovieQuizPresenter {
         )
     }
     
-    func didRecieveNextQuestion(question: QuizQuestion?) {
+    func didReceiveNextQuestion(question: QuizQuestion?) {
         guard let question = question else {
             return
         }
@@ -53,9 +70,22 @@ final class MovieQuizPresenter {
         }
     }
     
+    func didLoadDataFromServer() {
+        viewController?.hideLoadingIndicator()
+        questionFactory?.requestNextQuestion()
+    }
+        
+    func didFailToLoadData(with error: Error) {
+        let message = error.localizedDescription
+        viewController?.showNetworkError(message: message)
+    }
+        
+    
+
+    
     func showNextQuestionOrResults() {
         if self.isLastQuestion() {
-            let text = "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
+            let text = "Вы ответили на \(correctAnswers) из \(questionsAmount), попробуйте ещё раз!"
             
             let viewModel = QuizResultsViewModel(
                 title: "Этот раунд окончен!",
@@ -68,6 +98,19 @@ final class MovieQuizPresenter {
         }
     }
     
+    func didAnswer(isCorrectAnswer: Bool) {
+        if isCorrectAnswer {
+            correctAnswers += 1
+        }
+    }
+    
+    func restartGame() {
+        resetQuestionIndex()
+        questionFactory?.requestNextQuestion()
+        correctAnswers = 0
+    }
+    
+    
     // MARK: Private methods
     
     private func didAnswer(isYes: Bool) {
@@ -77,4 +120,5 @@ final class MovieQuizPresenter {
         
         viewController?.showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
     }
+    
 }
