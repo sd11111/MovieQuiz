@@ -73,11 +73,6 @@
                                                     <color key="baseForegroundColor" name="YP Black"/>
                                                     <color key="baseBackgroundColor" name="YP White"/>
                                                 </buttonConfiguration>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="15"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="noButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kz9-Vz-Knr"/>
                                                 </connections>
@@ -90,11 +85,6 @@
                                                     <color key="baseForegroundColor" name="YP Black"/>
                                                     <color key="baseBackgroundColor" name="YP White"/>
                                                 </buttonConfiguration>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="15"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="yesButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Axl-kd-G4v"/>
                                                 </connections>
@@ -106,17 +96,23 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="kCW-bA-bwh">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="YP Black"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="96y-Uj-jR4" secondAttribute="bottom" id="Hat-ej-wJT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="96y-Uj-jR4" secondAttribute="trailing" constant="20" id="dBZ-tj-cEz"/>
+                            <constraint firstItem="kCW-bA-bwh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ep6-My-vdt"/>
+                            <constraint firstItem="kCW-bA-bwh" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="grK-qR-C6q"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="top" secondItem="96y-Uj-jR4" secondAttribute="top" constant="10" id="uvr-42-gT6"/>
                             <constraint firstItem="96y-Uj-jR4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="wpe-4J-yeV"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="kCW-bA-bwh" id="tQG-nf-ZhR"/>
                         <outlet property="counterLabel" destination="WYb-gG-9aW" id="9Tc-8G-Ojq"/>
                         <outlet property="imageView" destination="Ozl-ey-A2D" id="n0k-vI-68E"/>
                         <outlet property="noButton" destination="gBG-Hr-Y3s" id="AUI-WG-fVz"/>
