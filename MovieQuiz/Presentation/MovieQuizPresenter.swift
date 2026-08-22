@@ -1,10 +1,23 @@
 import Foundation
 
+protocol MovieQuizViewControllerProtocol: AnyObject {
+    func show(quiz step: QuizStepViewModel)
+    func show(quiz result: QuizResultsViewModel)
+    
+    func highlightImageBorder(isCorrectAnswer: Bool)
+    
+    func showLoadingIndicator()
+    func hideLoadingIndicator()
+    
+    func showNetworkError(message: String)
+}
+
 final class MovieQuizPresenter: QuestionFactoryDelegate {
+
     
     // MARK: variables
     
-    weak var viewController: MovieQuizViewController?
+    private weak var viewController: MovieQuizViewControllerProtocol?
     private var questionFactory: QuestionFactoryProtocol?
     private let statisticService: StatisticServiceProtocol!
     let questionsAmount: Int = 10
@@ -13,7 +26,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     var correctAnswers: Int = 0
     
     // MARK: init
-    init(viewController: MovieQuizViewController) {
+    init(viewController: MovieQuizViewControllerProtocol) {
         self.viewController = viewController
         
         statisticService = StatisticService()
